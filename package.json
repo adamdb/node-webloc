@@ -1,0 +1,6 @@
+# package.json
+{
+   "name": "node-webloc",
+   "version": "0.0.1",
+   "description": "A Node.js module for validating and updating Webloc files."
+}
