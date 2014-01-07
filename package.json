@@ -1,5 +1,17 @@
 {
-   "name": "node-webloc",
+   "name": "webloc",
    "version": "0.0.1",
-   "description": "A Node.js module for validating and updating Webloc files."
+   "description": "A Node.js module for validating and updating Webloc files.",
+   "dependencies": {
+      "xml2js": "~0.4.1"
+   },
+   "repository": { 
+      "type": "git",
+      "url": "https://github.com/adamdb/node-webloc.git"
+   },
+   "main": "./index.js",
+   "preferGlobal": "true",
+   "bin": {
+      "webloc": "./index.js"
+  }
 }
