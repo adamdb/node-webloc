@@ -6,7 +6,9 @@ node.Webloc = function() {
    var fs = require('fs');
    var xml2js = require('xml2js');
    var util = require('util');   
-
+   var http = require('http');
+   var request = require('request');
+   
    var parser  = new xml2js.Parser();
 
    fs.readdir(process.cwd(), function (err, files) {
@@ -24,10 +26,27 @@ node.Webloc = function() {
          var parser = new xml2js.Parser();
    
          parser.parseString(data, function(error, result) {
-            var extractedData = result['plist']['dict'][0]['string'][0];
+            var url = result['plist']['dict'][0]['string'][0];
+            
+            checkURL(url);
          }); 
       }); 
-   };    
+   };
+
+   function checkURL(url) {
+      process.stdout.write(url + ': ');
+      
+      var request = require('request');
+      
+      request(url, function (error, response, body) {
+         if (!error && response.statusCode == 200) {
+            process.stdout.write('GOOD\r\n');
+         }
+         else {
+            process.stdout.write('BAD\r\n');
+         }
+      });
+   }    
 };
 
 var webloc = new node.Webloc();

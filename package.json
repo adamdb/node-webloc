@@ -3,7 +3,8 @@
    "version": "0.0.1",
    "description": "A Node.js module for validating and updating Webloc files.",
    "dependencies": {
-      "xml2js": "~0.4.1"
+      "xml2js": "~0.4.1",
+      "request": "~2.31.0"
    },
    "repository": { 
       "type": "git",
