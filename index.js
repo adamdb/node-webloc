@@ -10,9 +10,16 @@ node.Webloc = function() {
    var request = require('request');
    
    var parser  = new xml2js.Parser();
-
+   var badUrlTotal = 0;
+   var filesTotal = 0;
+   var checkedTotal = 0;
+ 
    fs.readdir(process.cwd(), function (err, files) {
-      for (var i=0; i < files.length; i++) {
+      filesTotal = files.length;   
+   
+      console.log('Starting check...');
+
+      for (var i=0; i < filesTotal; i++) {
          readFile(files[i]);
       } 
    });
@@ -34,18 +41,26 @@ node.Webloc = function() {
    };
 
    function checkURL(url) {
-      process.stdout.write(url + ': ');
-      
-      var request = require('request');
-      
       request(url, function (error, response, body) {
+         ++checkedTotal;
+
          if (!error && response.statusCode == 200) {
-            process.stdout.write('GOOD\r\n');
+            console.log(url + ' – GOOD');
          }
          else {
-            process.stdout.write('BAD\r\n');
+            ++badUrlTotal;
+            console.log(url + ' – BAD');
+         }
+
+         if (checkedTotal >= filesTotal) {
+            completeCheck();
          }
       });
+   }
+
+   function completeCheck() {
+      console.log('Finished!');
+      console.log('Checked ' + filesTotal + ' Webloc files, ' + badUrlTotal + ' Bad and ' + (filesTotal - badUrlTotal) + ' Good');
    }    
 };
 
